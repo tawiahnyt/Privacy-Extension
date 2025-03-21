@@ -8,13 +8,17 @@
       body {
         width: 400px;
         padding: 16px;
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
       }
       .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #e9ecef;
       }
       .stats {
         display: grid;
@@ -23,24 +27,45 @@
         margin-bottom: 20px;
       }
       .stat-card {
-        background: #f5f5f5;
-        padding: 10px;
-        border-radius: 8px;
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
         text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s;
+        cursor: help;
+      }
+      .stat-card:hover {
+        transform: translateY(-2px);
       }
       .stat-value {
         font-size: 24px;
         font-weight: bold;
         color: #2196f3;
       }
+      .search-box {
+        width: 100%;
+        padding: 8px 12px;
+        margin: 10px 0;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        font-size: 14px;
+      }
       .tracker-list {
         max-height: 300px;
         overflow-y: auto;
         margin-bottom: 20px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
       .tracker-item {
-        padding: 10px;
+        padding: 12px;
         border-bottom: 1px solid #eee;
+        transition: background-color 0.2s;
+      }
+      .tracker-item:hover {
+        background-color: #f8f9fa;
       }
       .category-analytics {
         color: #2196f3;
@@ -51,16 +76,37 @@
       .category-social {
         color: #4caf50;
       }
+      .category-icon {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+      .cookie-icon {
+        color: #ff9800;
+        margin-right: 8px;
+      }
+      .empty-state {
+        text-align: center;
+        padding: 20px;
+        color: #6c757d;
+      }
       button {
         background: #2196f3;
         color: white;
         border: none;
         padding: 10px 20px;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s;
       }
       button:hover {
         background: #1976d2;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      button:active {
+        transform: translateY(0);
+        box-shadow: none;
       }
     </style>
   </head>
@@ -71,20 +117,38 @@
     </div>
 
     <div class="stats">
-      <div class="stat-card">
+      <div
+        class="stat-card"
+        title="Total number of unique trackers detected across all websites"
+      >
         <div class="stat-value" id="trackerCount">0</div>
         <div>Trackers Detected</div>
       </div>
-      <div class="stat-card">
+      <div
+        class="stat-card"
+        title="Total number of tracking requests intercepted"
+      >
         <div class="stat-value" id="requestCount">0</div>
         <div>Requests Monitored</div>
       </div>
     </div>
 
     <h3>Recent Trackers</h3>
+    <input
+      type="text"
+      class="search-box"
+      id="trackerSearch"
+      placeholder="Search trackers by domain or category..."
+    />
     <div class="tracker-list" id="trackerList"></div>
 
     <h3>Cookie Activity</h3>
+    <input
+      type="text"
+      class="search-box"
+      id="cookieSearch"
+      placeholder="Search cookies by domain..."
+    />
     <div class="tracker-list" id="cookieList"></div>
 
     <script src="popup.js"></script>
