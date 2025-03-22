@@ -8,9 +8,9 @@ function formatTime(timestamp) {
 // Get category icon
 function getCategoryIcon(category) {
   const icons = {
-    analytics: "📊",
-    advertising: "🎯",
-    social: "👥",
+    analytics: "\u{1F4CA}",
+    advertising: "\u{1F3AF}",
+    social: "\u{1F465}",
   };
   return icons[category] || "🔍";
 }
@@ -95,13 +95,13 @@ function updateCookieList(cookies) {
 
     cookieItem.innerHTML = `
       <div>
-        <span class="cookie-icon">🍪</span>
+        <span class="cookie-icon">\u{1F36A}</span>
         <strong>${domain}</strong>
       </div>
       <div>
         <span title="Total cookies">Total: ${cookieData.length}</span> |
-        <span title="Secure cookies">🔒 ${secureCount}</span> |
-        <span title="HTTP-only cookies">🛡️ ${httpOnlyCount}</span>
+        <span title="Secure cookies">\u{1F512} ${secureCount}</span> |
+        <span title="HTTP-only cookies">\u{1F6E1} ${httpOnlyCount}</span>
       </div>
       <div>Latest: ${formatTime(
         cookieData[cookieData.length - 1].timestamp

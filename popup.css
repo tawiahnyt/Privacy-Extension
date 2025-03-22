@@ -1,0 +1,281 @@
+/** @format */
+
+body {
+  width: 400px;
+  padding: 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.header h1 {
+  font-size: 24px;
+  margin: 0;
+  color: #1a73e8;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+  cursor: help;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+.search-container {
+  margin-bottom: 16px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 10px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.search-box:focus {
+  border-color: #1a73e8;
+  outline: none;
+}
+
+.section-title {
+  font-size: 18px;
+  color: #1a73e8;
+  margin: 24px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tracker-list,
+.cookie-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tracker-item,
+.cookie-item {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.tracker-item:hover,
+.cookie-item:hover {
+  background-color: #f5f7fa;
+}
+
+.tracker-item:last-child,
+.cookie-item:last-child {
+  border-bottom: none;
+}
+
+.category-analytics {
+  color: #1a73e8;
+}
+.category-advertising {
+  color: #ea4335;
+}
+.category-social {
+  color: #34a853;
+}
+
+.category-label {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.cookie-details {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th {
+  text-align: left;
+  color: #666;
+  font-weight: normal;
+  padding: 8px;
+  width: 30%;
+}
+
+.details-table td {
+  padding: 8px;
+  color: #333;
+}
+
+.security-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.security-indicator.secure {
+  background-color: #e6f4ea;
+  color: #34a853;
+}
+
+.security-indicator.warning {
+  background-color: #fce8e6;
+  color: #ea4335;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: #1a73e8;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.button {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  background: #1557b0;
+}
+
+.button.secondary {
+  background: #f1f3f4;
+  color: #1a73e8;
+}
+
+.button.secondary:hover {
+  background: #e8eaed;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px 20px;
+  color: #666;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
