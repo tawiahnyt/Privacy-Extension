@@ -11,8 +11,37 @@ function getCategoryIcon(category) {
     analytics: "\u{1F4CA}",
     advertising: "\u{1F3AF}",
     social: "\u{1F465}",
+    fingerprinting: "\u{1F440}"
   };
   return icons[category] || "🔍";
+}
+
+// Update blocking preferences
+function updateBlockingPreferences() {
+  const preferences = {
+    blockAnalytics: document.getElementById('blockAnalytics').checked,
+    blockAds: document.getElementById('blockAds').checked,
+    blockSocial: document.getElementById('blockSocial').checked,
+    preventFingerprinting: document.getElementById('preventFingerprinting').checked,
+    enableHeuristics: document.getElementById('enableHeuristics').checked
+  };
+  
+  chrome.runtime.sendMessage(
+    { type: 'updatePreferences', preferences },
+    response => {
+      if (response.success) {
+        showNotification('Preferences updated successfully');
+      }
+    }
+  );
+}
+
+// Show notification
+function showNotification(message) {
+  const notification = document.getElementById('notification');
+  notification.textContent = message;
+  notification.classList.add('show');
+  setTimeout(() => notification.classList.remove('show'), 3000);
 }
 
 // Function to filter trackers
@@ -111,12 +140,63 @@ function updateCookieList(cookies) {
   });
 }
 
-// Function to update stats
+// Function to update stats and risk assessment
 function updateStats(data) {
-  document.getElementById("trackerCount").textContent = Object.keys(
-    data.trackers
-  ).length;
-  document.getElementById("requestCount").textContent = data.requests;
+  // Update basic stats
+  document.getElementById('trackerCount').textContent = Object.keys(data.trackers).length;
+  document.getElementById('requestCount').textContent = data.requests;
+  
+  // Update blocking stats
+  Object.entries(data.blocked).forEach(([category, count]) => {
+    const element = document.getElementById(`${category}BlockedCount`);
+    if (element) element.textContent = count;
+  });
+
+  // Update risk assessment bars
+  Object.entries(data.riskAssessment).forEach(([key, value]) => {
+    const riskBar = document.getElementById(`risk-${key}`);
+    if (riskBar) {
+      riskBar.style.width = `${value}%`;
+      riskBar.className = `risk-level ${getRiskClass(value)}`;
+    }
+  });
+
+  // Update recommendations
+  updateRecommendations(data);
+}
+
+// Get risk level class
+function getRiskClass(value) {
+  if (value < 30) return 'low';
+  if (value < 70) return 'medium';
+  return 'high';
+}
+
+// Update privacy recommendations
+function updateRecommendations(data) {
+  const recommendationsList = document.getElementById('recommendationsList');
+  recommendationsList.innerHTML = '';
+  
+  const recommendations = [];
+  
+  // Add recommendations based on risk assessment
+  if (data.riskAssessment.dataCollection > 70) {
+    recommendations.push('High number of trackers detected. Consider enabling additional blocking features.');
+  }
+  
+  if (data.riskAssessment.thirdPartySharing > 50) {
+    recommendations.push('Significant third-party data sharing detected. Review and adjust blocking settings.');
+  }
+  
+  if (data.riskAssessment.cookieUsage > 60) {
+    recommendations.push('Multiple unsecure cookies found. Enable strict cookie controls.');
+  }
+
+  recommendations.forEach(rec => {
+    const li = document.createElement('li');
+    li.textContent = rec;
+    recommendationsList.appendChild(li);
+  });
 }
 
 // Function to refresh all data
@@ -130,17 +210,48 @@ function refreshData() {
   });
 }
 
-// Clear data button handler
-document.getElementById("clearData").addEventListener("click", () => {
-  chrome.runtime.sendMessage({ type: "clearData" }, (response) => {
-    if (response && response.success) {
-      refreshData();
+// Initialize blocking preferences
+function initializePreferences() {
+  chrome.storage.local.get('userPreferences', (result) => {
+    const prefs = result.userPreferences || {};
+    Object.entries(prefs).forEach(([key, value]) => {
+      const element = document.getElementById(key);
+      if (element) element.checked = value;
+    });
+  });
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  refreshData();
+  initializePreferences();
+
+  // Setup blocking preference listeners
+  const prefToggles = [
+    'blockAnalytics',
+    'blockAds',
+    'blockSocial',
+    'preventFingerprinting',
+    'enableHeuristics'
+  ];
+
+  prefToggles.forEach(pref => {
+    const element = document.getElementById(pref);
+    if (element) {
+      element.addEventListener('change', updateBlockingPreferences);
     }
+  });
+
+  // Clear data button handler
+  document.getElementById('clearData').addEventListener('click', () => {
+    chrome.runtime.sendMessage({ type: 'clearData' }, (response) => {
+      if (response && response.success) {
+        refreshData();
+        showNotification('Data cleared successfully');
+      }
+    });
   });
 });
 
-// Initial data load
-document.addEventListener("DOMContentLoaded", refreshData);
-
 // Refresh data periodically
-setInterval(refreshData, 5000);
+setInterval(refreshData, 3000);

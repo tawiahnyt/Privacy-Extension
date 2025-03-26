@@ -4,6 +4,7 @@
 <html>
   <head>
     <title>Privacy Guardian</title>
+    <link rel="stylesheet" href="popup.css" />
     <style>
       body {
         width: 400px;
@@ -116,21 +117,86 @@
       <button id="clearData">Clear Data</button>
     </div>
 
+    <div class="blocking-controls">
+      <h3>Privacy Controls</h3>
+      <div class="control-group">
+        <label class="toggle-label">
+          <input type="checkbox" id="blockAnalytics" checked />
+          Block Analytics
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="blockAds" checked />
+          Block Advertising
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="blockSocial" checked />
+          Block Social Trackers
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="preventFingerprinting" checked />
+          Prevent Fingerprinting
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="enableHeuristics" checked />
+          Enable Heuristic Detection
+        </label>
+      </div>
+    </div>
+
     <div class="stats">
-      <div
-        class="stat-card"
-        title="Total number of unique trackers detected across all websites"
-      >
+      <div class="stat-card" title="Total number of unique trackers detected">
         <div class="stat-value" id="trackerCount">0</div>
         <div>Trackers Detected</div>
       </div>
-      <div
-        class="stat-card"
-        title="Total number of tracking requests intercepted"
-      >
+      <div class="stat-card" title="Total number of requests monitored">
         <div class="stat-value" id="requestCount">0</div>
         <div>Requests Monitored</div>
       </div>
+      <div class="stat-card" title="Analytics trackers blocked">
+        <div class="stat-value" id="analyticsBlockedCount">0</div>
+        <div>Analytics Blocked</div>
+      </div>
+      <div class="stat-card" title="Advertising trackers blocked">
+        <div class="stat-value" id="advertisingBlockedCount">0</div>
+        <div>Ads Blocked</div>
+      </div>
+      <div class="stat-card" title="Social trackers blocked">
+        <div class="stat-value" id="socialBlockedCount">0</div>
+        <div>Social Blocked</div>
+      </div>
+      <div class="stat-card" title="Fingerprinting attempts blocked">
+        <div class="stat-value" id="fingerprintingBlockedCount">0</div>
+        <div>Fingerprinting Blocked</div>
+      </div>
+    </div>
+
+    <div class="risk-assessment">
+      <h3>Privacy Risk Assessment</h3>
+      <div class="risk-indicators">
+        <div class="risk-item">
+          <span>Data Collection Risk</span>
+          <div class="risk-bar">
+            <div id="risk-dataCollection" class="risk-level"></div>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span>Third-Party Sharing</span>
+          <div class="risk-bar">
+            <div id="risk-thirdPartySharing" class="risk-level"></div>
+          </div>
+        </div>
+        <div class="risk-item">
+          <span>Cookie Security</span>
+          <div class="risk-bar">
+            <div id="risk-cookieUsage" class="risk-level"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recommendations">
+      <h3>Privacy Recommendations</h3>
+      <ul id="recommendationsList" class="recommendations-list"></ul>
     </div>
 
     <h3>Recent Trackers</h3>

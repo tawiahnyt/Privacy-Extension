@@ -9,6 +9,137 @@ body {
   line-height: 1.6;
 }
 
+.blocking-controls {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.control-group {
+  display: grid;
+  gap: 12px;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-label input[type="checkbox"] {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.toggle-label input[type="checkbox"]:checked {
+  background: #2196f3;
+}
+
+.toggle-label input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background: white;
+  transition: transform 0.3s;
+}
+
+.toggle-label input[type="checkbox"]:checked::before {
+  transform: translateX(20px);
+}
+
+.risk-assessment {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin: 24px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.risk-indicators {
+  display: grid;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.risk-item {
+  display: grid;
+  gap: 8px;
+}
+
+.risk-bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.risk-level {
+  height: 100%;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+.risk-level.low {
+  background: #4caf50;
+}
+
+.risk-level.medium {
+  background: #ff9800;
+}
+
+.risk-level.high {
+  background: #f44336;
+}
+
+.recommendations {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.recommendations-list {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.recommendations-list li {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+#notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#notification.show {
+  opacity: 1;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
